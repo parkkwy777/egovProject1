@@ -101,9 +101,46 @@ $(document).ready(function(){
 	});
 	
 	$(".delete").click(function(){
-		$(location).attr("href","/egovframework-all-in-one/delete.do?nttIdArray="+delArr);
+		$.ajax({
+		
+			url:"/egovframework-all-in-one/delete.do?nttIdArray="+delArr,
+			type:"get",
+			success:function(data){
+				for(var i=0; i<$(".check").length; i++){
+					for(var j=0; j<delArr.length; j++){
+						if($(".check").eq(i).val()==delArr[j]){
+							$(".check").eq(i).parent().parent().remove();
+						}
+					}
+				}
+				if($("tr").length){
+					alert("tr없음");
+				}
+			},
+			error:function(request,error){
+				alert("실패");
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+			}
+			
+		});
+		/* $(location).attr("href","/egovframework-all-in-one/delete.do?nttIdArray="+delArr); */
 	});
 });
+/* 
+function getAjaxView(){
+	$.ajax({
+		url:"/egovframework-all-in-one/cop/bbs/selectArticleList.do??bbsId=BBSMSTR_000000000001",
+		type:"get",
+		success:function(data){
+			alert("성공");
+		},
+		error:function(request,error){
+			alert("실패");
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+		}
+	});
+	
+} */
 
 </script>
 </head>
